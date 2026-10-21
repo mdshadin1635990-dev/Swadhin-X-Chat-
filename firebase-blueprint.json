@@ -1,0 +1,151 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile with authentication UID, display name, photo, status, role, and timestamps.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Unique Firebase Authentication UID." },
+        "email": { "type": "string", "description": "User email address." },
+        "displayName": { "type": "string", "description": "User display name (1-60 characters)." },
+        "photoUrl": { "type": "string", "description": "Avatar URL or preset avatar identifier." },
+        "statusMessage": { "type": "string", "description": "Custom status message." },
+        "isOnline": { "type": "boolean", "description": "Online presence status." },
+        "role": { "type": "string", "description": "User role: 'user' or 'admin'." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp via FieldValue.serverTimestamp()." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp via FieldValue.serverTimestamp()." }
+      },
+      "required": ["userId", "email", "displayName", "createdAt", "updatedAt"]
+    },
+    "Channel": {
+      "title": "Channel",
+      "description": "International public or topic chat channel.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Channel identifier." },
+        "name": { "type": "string", "description": "Channel display name." },
+        "description": { "type": "string", "description": "Channel topic and purpose description." },
+        "topic": { "type": "string", "description": "Category or topic tag." },
+        "icon": { "type": "string", "description": "Icon identifier for channel." },
+        "isAnnouncementOnly": { "type": "boolean", "description": "Whether only admins can post messages." },
+        "createdBy": { "type": "string", "description": "UID of creator." },
+        "messageCount": { "type": "integer", "description": "Total message counter." },
+        "lastMessageText": { "type": "string", "description": "Snippet of latest message." },
+        "lastMessageSenderName": { "type": "string", "description": "Sender name of latest message." },
+        "lastMessageTime": { "type": "string", "format": "date-time", "description": "Timestamp of latest message." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp via FieldValue.serverTimestamp()." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp via FieldValue.serverTimestamp()." }
+      },
+      "required": ["id", "name", "description", "createdBy", "createdAt", "updatedAt"]
+    },
+    "ChannelMessage": {
+      "title": "ChannelMessage",
+      "description": "Real-time message posted in a channel.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Message identifier." },
+        "channelId": { "type": "string", "description": "Parent channel ID." },
+        "senderId": { "type": "string", "description": "Sender Firebase Authentication UID." },
+        "senderName": { "type": "string", "description": "Display name of message sender." },
+        "senderPhotoUrl": { "type": "string", "description": "Avatar URL of message sender." },
+        "text": { "type": "string", "description": "Text message content (1-2000 characters)." },
+        "messageType": { "type": "string", "description": "Type of message ('text' or 'announcement')." },
+        "isPinned": { "type": "boolean", "description": "Whether message is pinned by admin." },
+        "deleted": { "type": "boolean", "description": "Soft delete flag." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp via FieldValue.serverTimestamp()." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp via FieldValue.serverTimestamp()." }
+      },
+      "required": ["id", "channelId", "senderId", "senderName", "text", "createdAt", "updatedAt"]
+    },
+    "DirectChat": {
+      "title": "DirectChat",
+      "description": "1-on-1 private chat room between two users.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Direct chat identifier." },
+        "participantUids": { "type": "array", "description": "List of the two user UIDs." },
+        "lastMessageText": { "type": "string", "description": "Latest message text snippet." },
+        "lastMessageSenderId": { "type": "string", "description": "UID of last sender." },
+        "lastMessageTime": { "type": "string", "format": "date-time", "description": "Timestamp of last message." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp." }
+      },
+      "required": ["id", "participantUids", "createdAt", "updatedAt"]
+    },
+    "DirectChatMessage": {
+      "title": "DirectChatMessage",
+      "description": "1-on-1 private message.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Message identifier." },
+        "chatId": { "type": "string", "description": "Parent chat ID." },
+        "senderId": { "type": "string", "description": "Sender Firebase Authentication UID." },
+        "senderName": { "type": "string", "description": "Sender display name." },
+        "senderPhotoUrl": { "type": "string", "description": "Sender photo URL." },
+        "text": { "type": "string", "description": "Message content (1-2000 chars)." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp." }
+      },
+      "required": ["id", "chatId", "senderId", "senderName", "text", "createdAt", "updatedAt"]
+    },
+    "AdminRecord": {
+      "title": "AdminRecord",
+      "description": "System admin role assignment record.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Admin Firebase UID." },
+        "email": { "type": "string", "description": "Admin email address." },
+        "addedBy": { "type": "string", "description": "UID of administrator who granted access." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp." }
+      },
+      "required": ["userId", "email", "createdAt"]
+    },
+    "SystemReport": {
+      "title": "SystemReport",
+      "description": "User report or moderation issue submitted to admins.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Report identifier." },
+        "reporterId": { "type": "string", "description": "UID of reporting user." },
+        "reporterName": { "type": "string", "description": "Name of reporter." },
+        "reportedUserId": { "type": "string", "description": "UID of reported user." },
+        "reportedMessageId": { "type": "string", "description": "ID of reported message." },
+        "reason": { "type": "string", "description": "Reason for report." },
+        "status": { "type": "string", "description": "'pending', 'reviewed', or 'resolved'." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Timestamp." }
+      },
+      "required": ["id", "reporterId", "reason", "status", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profile documents keyed by Firebase Auth UID."
+    },
+    "/channels/{channelId}": {
+      "schema": { "$ref": "#/entities/Channel" },
+      "description": "Public chat channels for international topics."
+    },
+    "/channels/{channelId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChannelMessage" },
+      "description": "Real-time message items in channels."
+    },
+    "/direct_chats/{chatId}": {
+      "schema": { "$ref": "#/entities/DirectChat" },
+      "description": "Direct conversation threads between pairs of users."
+    },
+    "/direct_chats/{chatId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/DirectChatMessage" },
+      "description": "Messages sent in direct chats."
+    },
+    "/admins/{userId}": {
+      "schema": { "$ref": "#/entities/AdminRecord" },
+      "description": "Administrator roster granting elevated moderation permissions."
+    },
+    "/system_reports/{reportId}": {
+      "schema": { "$ref": "#/entities/SystemReport" },
+      "description": "Moderation reports submitted by users and handled by admins."
+    }
+  }
+}

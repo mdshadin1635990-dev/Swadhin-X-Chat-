@@ -1,0 +1,6 @@
+{
+  "name": "Swadhin X Chat",
+  "description": "Modern international real-time chat application with Google Authentication, user profiles, rich messaging, and secure admin controls.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
